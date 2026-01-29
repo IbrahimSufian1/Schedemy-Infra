@@ -14,8 +14,11 @@ resource "aws_launch_template" "app_lt" {
     }
   user_data = base64encode(<<-EOF
               #!/bin/bash
-              sudo systemctl daemon-reload
-              sudo systemctl enable --now schedemy
+              mkdir -p /opt/schedemy
+              chown -R ec2-user:ec2-user /opt/schedemy
+              aws s3 cp s3://${aws_s3_bucket.app_bucket.id}/schedemy.jar /opt/schedemy/schedemy.jar
+              systemctl daemon-reload
+              systemctl enable --now schedemy
               EOF
   )
   tag_specifications {
@@ -38,4 +41,5 @@ resource "aws_autoscaling_group" "app_asg" {
    }
    health_check_type = "ELB"
    health_check_grace_period = 300 #5 minutes grace period for app to start
+
 }
