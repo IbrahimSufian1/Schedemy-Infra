@@ -46,4 +46,4 @@ To deploy this infrastructure, you need:
 * `variables.tf`: Input variables.
 
 ---
-*© 2024 Schedemy Project Team.*
+*© Developed by Ibrahim Sufian as part of the DevOps Capstone Project.*
